@@ -1,10 +1,10 @@
 // Require schema and model from mongoose
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 // Defining a new schema for the subdocument
-const reactionSchema = new mongoose.Schema({
+const reactionSchema = new Schema({
     reactionId: { 
-        type: mongoose.Schema.Types.ObjectId, 
+        type: Schema.Types.ObjectId, 
         default: () => new Types.ObjectId(),
     },
     reactionBody: { 
@@ -24,7 +24,7 @@ const reactionSchema = new mongoose.Schema({
 });
 
 // Construct a new instance of the schema class
-const thoughtSchema = new mongoose.Schema(
+const thoughtSchema = new Schema(
     {
         thoughtText: { 
             type: String, 
@@ -73,7 +73,7 @@ thoughtSchema
     });
 
 // Using mongoose.model() to compile a model based on the schema 'thoughtSchema'
-const Thought = mongoose.model('Thoughts', thoughtSchema);
+const Thought = model('Thoughts', thoughtSchema);
 
 // Create new instances of the model, a document
 // Thought.create([
