@@ -1,56 +1,10 @@
 const router = require('express').Router();
-// const { TODO: } = require('../../models');
+const { getThoughts, getOneThought, createThought, updateThought, deleteThought } = require('../../controllers/thoughtsController');
 
-// The `/api/thoughts` endpoint
+// For the api/thoughts endpoint
+router.route('/').get(getThoughts).post(createThought);
 
-// GET all thoughts
-router.get('/', async (req, res) => {
-    // TODO:
-    // try {
-    //     res.status(200).json(userData);
-    // } catch (err) {
-    //     res.status(500).json(err);
-    // }
-});
-
-// POST a new thought
-router.post('/', async (req, res) => {
-    // TODO:
-    // try {
-    //     res.status(200).json(userData);
-    // } catch (err) {
-    //     res.status(500).json(err);
-    // }
-});
-
-// GET a single thought by its '_id'
-router.get('/:id', async (req, res) => {
-    // TODO:
-    // try {
-    //     res.status(200).json(userData);
-    // } catch (err) {
-    //     res.status(500).json(err);
-    // }
-});
-
-// UPDATE a thought by its '_id'
-router.put('/:id', (req, res) => {
-    // TODO:
-    // try {
-    //     res.status(200).json(userData);
-    // } catch (err) {
-    //     res.status(500).json(err);
-    // }
-});
-
-// DELETE a thought by its '_id'
-router.delete('/:id', (req, res) => {
-    // TODO:
-    // try {
-    //     res.status(200).json(userData);
-    // } catch (err) {
-    //     res.status(500).json(err);
-    // }
-});
+// For the api/thoughts/:id endpoint
+router.route('/:thoughtId').get(getOneThought).put(updateThought).delete(deleteThought);
 
 module.exports = router;
