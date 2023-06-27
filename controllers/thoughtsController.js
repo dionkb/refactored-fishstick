@@ -24,11 +24,17 @@ module.exports = {
             res.status(500).json(err);
         }
     },
-    // POST to create a new thought TODO: Add the though to users array of thoughts?
+    // POST to create a new thought
     async createThought(req, res) {
         try {
             const newThoughtData = await Thought.create(req.body);
-            res.json(newThoughtData);
+
+            const userData = await User.findByIdAndUpdate(
+                    req.body.userId, 
+                    { $addToSet: { thoughts: newThoughtData._id } },
+                    { runValidators: true, new: true }
+                )
+            res.json({ newThoughtData, userData });
         } catch (err) {
             res.status(500).json(err);
         }
