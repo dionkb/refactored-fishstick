@@ -1,6 +1,6 @@
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');
-const { userRandomizer } = require('./data');
+const { userRandomizer, thoughtRandomizer } = require('./data');
 // const { userRandomizer, thoughtRandomizer, reactionRandomizer } = require('./data');
 
 connection.on('error', (err) => err);
@@ -19,22 +19,30 @@ connection.once('open', async () => {
   }
 
   const users = [];
-  // const thoughts = thoughtRandomizer(10); TODO:
 
-  for (let i = 0; i < 20; i++) {
-    const userName = userRandomizer();;
+  for (let i = 0; i < 10; i++) {
+    const username = userRandomizer();
 
     users.push({
-      userName
+      username
     });
   }
 
-  await User.collection.insertMany(users);
-  // await Thought.collection.insertMany(thoughts); TODO:
+  // const thoughts = [];
 
-  // TODO: loop through the saved thoughts, for each thought we need to generate a thought response and insert the thought responses
+  // for (let i = 0; i < 20; i++) {
+  //   const randomThoughts = thoughtRandomizer();
+
+  //   thoughts.push({
+  //     randomThoughts
+  //   });
+  // }
+
+  await User.collection.insertMany(users);
+  // await Thought.collection.insertMany(thoughts);
+
   console.table(users);
-  // console.table(thoughts); TODO:
+  // console.table(thoughts);
   console.info('Seeding complete! 🌱');
   process.exit(0);
 });

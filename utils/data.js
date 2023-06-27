@@ -165,9 +165,9 @@ const userRandomizer = () =>
   randomizer(names);
 
 // TODO: Get random thoughts, along with reactions to those thoughts
-// const thoughtRandomizer = (integer) => {
-
-// };
+const thoughtRandomizer = () => {
+  randomizer(thoughts);
+};
 
 // TODO: Get random reactions to tag onto randomly generated thoughts
 // const reactionRandomizer = (integer) => {
@@ -175,6 +175,6 @@ const userRandomizer = () =>
 // };
 
 // Export the functions for use in seed.js
-module.exports = { userRandomizer };
+module.exports = { userRandomizer, thoughtRandomizer };
 // Below, to-be-used once other functions are written
 // module.exports = { userRandomizer, thoughtRandomizer, reactionRandomizer };
