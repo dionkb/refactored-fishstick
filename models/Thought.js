@@ -2,26 +2,33 @@
 const { Schema, model } = require('mongoose');
 
 // Defining a new schema for the subdocument
-const reactionSchema = new Schema({
-    reactionId: { 
-        type: Schema.Types.ObjectId, 
-        default: () => new Types.ObjectId(),
+const reactionSchema = new Schema(
+    {
+        reactionId: { 
+            type: Schema.Types.ObjectId, 
+            default: () => new Types.ObjectId(),
+        },
+        reactionBody: { 
+            type: String, 
+            required: true,
+            maxLength: 280
+        },
+        username: {
+            type: String, 
+            required: true,
+        },
+        createdAt: {
+            type: Date, 
+            default: Date.now,
+            get: timeFormat => timeFormat.toLocaleString(),
+        }
     },
-    reactionBody: { 
-        type: String, 
-        required: true,
-        maxLength: 280
-    },
-    username: {
-        type: String, 
-        required: true,
-    },
-    createdAt: {
-        type: Date, 
-        default: Date.now,
-        // get: timeFormat, TODO:
+    {
+        toJSON: {
+            getters: true,
+        }
     }
-});
+);
 
 // Construct a new instance of the schema class
 const thoughtSchema = new Schema(
@@ -35,14 +42,13 @@ const thoughtSchema = new Schema(
         createdAt: { 
             type: Date, 
             default: Date.now,
-            // get: timeFormat, TODO:
+            get: timeFormat => timeFormat.toLocaleString(),
         },
         username: { 
             type: String, 
             required: true, 
         },
         reactions: [reactionSchema],
-        // Use built in date method to get current date
         lastAccessed: { 
             type: Date, 
             default: Date.now 
@@ -51,17 +57,11 @@ const thoughtSchema = new Schema(
     {
         toJSON: {
             virtuals: true,
+            getters: true,
         },
         id: false,
     },
 );
-
-// TODO: Creating the getter function used in createdAt attribute of reactionSchema & thoughtSchema
-// function timeFormat(date) {
-//     if (date) {
-//         return date      
-//     }
-// }
 
 // Adding a 'virtual' property to the model
 thoughtSchema

@@ -58,9 +58,4 @@ userSchema
 // Using mongoose.model() to compile a model based on the schema 'userSchema'
 const User = model('User', userSchema);
 
-// Create new instances of the model, a document
-// User.create([
-
-// ]);
-
 module.exports = User;
