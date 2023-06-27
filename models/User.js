@@ -14,11 +14,12 @@ const userSchema = new Schema(
             type: String, 
             required: true,
             unique: true,
-            // TEST: Check if this validator works 
-            match: [ 
-                `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`,
-                'Invalid email address'
-            ] 
+            validate: {
+                validator: function(email) {
+                    return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email);
+                },
+                message: input => `${input.value} is not a valid email address`
+            },
         },
         thoughts: [
             {
