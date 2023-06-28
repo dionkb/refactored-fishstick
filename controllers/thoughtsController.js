@@ -25,6 +25,11 @@ module.exports = {
         }
     },
     // POST to create a new thought
+        // Formatting example
+        // {
+        // 	"thoughtText": "Hello! This is a test thought!",
+        // 	"username": "UpdatedTestMan"
+        // }
     async createThought(req, res) {
         try {
             const newThoughtData = await Thought.create(req.body);
@@ -40,6 +45,10 @@ module.exports = {
         }
     },
     // PUT to update an existing thought
+        // Formatting example
+        // {
+        // 	"thoughtText": "Goodbye! I've edited my thoughts!",
+        // }
     async updateThought(req, res) {
         try {
             const thoughtData = await Thought.findOneAndUpdate(
@@ -64,6 +73,38 @@ module.exports = {
                 return res.status(404).json({ message: 'No thought found with this ID number' });
             }
             res.json({ message: 'Thought successfully deleted!' });
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+    // POST to create a new reaction to a thought
+        // Formatting example
+        // {
+        // 	"reactionBody": "Mamma mia that's a spicy thought!",
+        // 	"username": "MsReaction"
+        // }
+    async createReaction(req, res) {
+        try {
+            const newReactionData = await Reaction.create(req.body);
+
+            const thoughtData = await Thought.findByIdAndUpdate(
+                    req.body.thoughtId, 
+                    { $addToSet: { reactions: newReactionData._id } },
+                    { runValidators: true, new: true }
+                )
+            res.json({ newReactionData, thoughtData });
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+    // DELETE a reaction by its '_id'
+    async deleteReaction(req, res) {
+        try {
+            const reactionData = await Reaction.findOneAndRemove({ _id: req.body._id });
+            if (!reactionData) {
+                return res.status(404).json({ message: 'No reaction found with this ID number' });
+            }
+            res.json({ message: 'Reaction successfully deleted!' });
         } catch (err) {
             res.status(500).json(err);
         }
