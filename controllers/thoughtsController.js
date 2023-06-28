@@ -105,7 +105,7 @@ module.exports = {
         try {
             const thoughtData = await Thought.findOneAndUpdate(
                     { _id: req.params.thoughtId },
-                    { $pull: { reactions: { _id: req.body.reactionId }}}
+                    { $pull: { reactions: req.body.reactionId }}
                 );
             if (!thoughtData) {
                 return res.status(404).json({ message: 'No thought found with this ID number' });

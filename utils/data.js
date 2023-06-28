@@ -176,6 +176,6 @@ const userRandomizer = () =>
 // };
 
 // Export the functions for use in seed.js
-module.exports = { userRandomizer, thoughtRandomizer };
+module.exports = { userRandomizer };
 // Below, to-be-used once other functions are written for possible future dev
 // module.exports = { userRandomizer, thoughtRandomizer, reactionRandomizer };
