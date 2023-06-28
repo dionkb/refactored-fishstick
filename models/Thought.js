@@ -73,7 +73,7 @@ thoughtSchema
     });
 
 // Using mongoose.model() to compile a model based on the schema 'thoughtSchema'
-const Thought = model('Thoughts', thoughtSchema);
+const Thought = model('thought', thoughtSchema);
 
 // Create new instances of the model, a document
 // Thought.create([

@@ -1,11 +1,13 @@
-const { User, Thought } = require('../models');
+const { User } = require('../models');
 
 // The `/api/users` endpoint
 module.exports = {
     // GET all users
     async getUsers(req, res) {
         try {
-            const usersData = await User.find();
+            const usersData = await User.find()
+                .select('-__v');
+    
             res.status(200).json(usersData);
         } catch (err) {
             res.status(500).json(err);
@@ -15,6 +17,10 @@ module.exports = {
     async getOneUser(req, res) {
         try {
             const userData = await User.findOne({ _id: req.params.userId })
+                .select('-__v')
+                .populate('thoughts')
+                .populate('friends');
+    
             if (!userData) {
                 return res.status(404).json({ message: 'No user found with that ID number' });
             }
@@ -24,6 +30,11 @@ module.exports = {
         }
     },
     // POST to create a new user
+        // Formatting example
+        // {
+        // 	"username": "Testman",
+        // 	"email": "emailtest@gmail.com"
+        // }
     async createUser(req, res) {
         try {
             const newUserData = await User.create(req.body);
@@ -33,6 +44,10 @@ module.exports = {
         }
     },
     // PUT to update an existing user
+        // Formatting example
+        // {
+        // 	"username": "UpdatedTestMan",
+        // }
     async updateUser(req, res) {
         try {
             const userData = await User.findOneAndUpdate(

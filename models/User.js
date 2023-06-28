@@ -24,13 +24,13 @@ const userSchema = new Schema(
         thoughts: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Thought'
+                ref: 'thought'
             }
         ],
         friends: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'User'
+                ref: 'user'
             }
         ],
         // Use built in date method to get current date
@@ -57,6 +57,6 @@ userSchema
     });
 
 // Using mongoose.model() to compile a model based on the schema 'userSchema'
-const User = model('User', userSchema);
+const User = model('user', userSchema);
 
 module.exports = User;
