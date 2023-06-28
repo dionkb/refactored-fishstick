@@ -97,6 +97,10 @@ module.exports = {
         }
     },
     // DELETE a reaction by its '_id'
+        // Formatting example
+        // {
+        //     "reactionId": "FIXME: Add the _id for the reaction here"
+        // }
     async deleteReaction(req, res) {
         try {
             const thoughtData = await Thought.findOneAndUpdate(

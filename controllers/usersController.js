@@ -76,4 +76,37 @@ module.exports = {
             res.status(500).json(err);
         }
     },
+    // POST to add a new friend to user's friend list
+    // Formatting example
+    // {
+    // 	"username": "Testman",
+    // 	"email": "emailtest@gmail.com"
+    // }
+    async addFriend(req, res) {
+        try {
+            const newFriendData = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: { friends: req.params.friendId } },
+                { runValidators: true, new: true }
+            );
+            res.json(newFriendData);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+    // DELETE a friend from a user's friend list using it's _id value
+    async deleteFriend(req, res) {
+        try {
+            const userData = await User.findOneAndUpdate(
+                    { _id: req.params.userId },
+                    { $pull: { friends: req.params.friendId }}
+                );
+            if (!userData) {
+                return res.status(404).json({ message: 'No user/friend found with this ID number' });
+            }
+            res.json({ message: 'Friend successfully removed!' });
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
 };

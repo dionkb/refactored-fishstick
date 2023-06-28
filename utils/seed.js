@@ -1,7 +1,7 @@
 const connection = require('../config/connection');
-const { User, Thought } = require('../models');
-const { userRandomizer, thoughtRandomizer } = require('./data');
-// const { userRandomizer, thoughtRandomizer, reactionRandomizer } = require('./data');
+const { User } = require('../models');
+const { userRandomizer } = require('./data');
+// const { userRandomizer, thoughtRandomizer, reactionRandomizer } = require('./data'); --> Possible future dev
 
 connection.on('error', (err) => err);
 
@@ -28,21 +28,20 @@ connection.once('open', async () => {
     });
   }
 
+  // ------ Possible future dev = adding pre-seeded thoughts/reactions for easier testing -------
   // const thoughts = [];
-
   // for (let i = 0; i < 20; i++) {
   //   const randomThoughts = thoughtRandomizer();
-
   //   thoughts.push({
   //     randomThoughts
   //   });
   // }
 
   await User.collection.insertMany(users);
-  // await Thought.collection.insertMany(thoughts);
+  // await Thought.collection.insertMany(thoughts); --> Possible future dev
 
   console.table(users);
-  // console.table(thoughts);
+  // console.table(thoughts); --> Possible future dev
   console.info('Seeding complete! 🌱');
   process.exit(0);
 });
