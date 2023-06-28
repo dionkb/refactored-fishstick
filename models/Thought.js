@@ -72,12 +72,7 @@ thoughtSchema
         return this.reactions.length;
     });
 
-// Using mongoose.model() to compile a model based on the schema 'thoughtSchema'
+// Using mongoose.model() to compile a model based on the schema 'thoughtSchema' & 'reactionSchema'
 const Thought = model('thought', thoughtSchema);
 
-// Create new instances of the model, a document
-// Thought.create([
-
-// ]);
-
-module.exports = Thought;
+module.exports =  Thought ;

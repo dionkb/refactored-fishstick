@@ -8,6 +8,6 @@ router.route('/').get(getThoughts).post(createThought);
 router.route('/:thoughtId').get(getOneThought).put(updateThought).delete(deleteThought);
 
 // For the api/thoughts/:thoughtId/reactions endpoint
-router.route('/:thoughtId/reactions').put(createReaction).delete(deleteReaction);
+router.route('/:thoughtId/reactions').post(createReaction).delete(deleteReaction);
 
 module.exports = router;

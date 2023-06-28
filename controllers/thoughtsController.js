@@ -28,7 +28,8 @@ module.exports = {
         // Formatting example
         // {
         // 	"thoughtText": "Hello! This is a test thought!",
-        // 	"username": "UpdatedTestMan"
+        // 	"username": "UpdatedTestMan",
+        //  "userId": "FIXME: Add the _id for the user here"
         // }
     async createThought(req, res) {
         try {
@@ -85,14 +86,12 @@ module.exports = {
         // }
     async createReaction(req, res) {
         try {
-            const newReactionData = await Reaction.create(req.body);
-
-            const thoughtData = await Thought.findByIdAndUpdate(
-                    req.body.thoughtId, 
-                    { $addToSet: { reactions: newReactionData._id } },
-                    { runValidators: true, new: true }
-                )
-            res.json({ newReactionData, thoughtData });
+            const thoughtData = await Thought.findOneAndUpdate(
+                    { _id: req.params.thoughtId }, 
+                    { $addToSet: { reactions: req.body } },
+                );
+            
+            res.json({ thoughtData });
         } catch (err) {
             res.status(500).json(err);
         }
@@ -100,9 +99,12 @@ module.exports = {
     // DELETE a reaction by its '_id'
     async deleteReaction(req, res) {
         try {
-            const reactionData = await Reaction.findOneAndRemove({ _id: req.body._id });
-            if (!reactionData) {
-                return res.status(404).json({ message: 'No reaction found with this ID number' });
+            const thoughtData = await Thought.findOneAndUpdate(
+                    { _id: req.params.thoughtId },
+                    { $pull: { reactions: { _id: req.body.reactionId }}}
+                );
+            if (!thoughtData) {
+                return res.status(404).json({ message: 'No thought found with this ID number' });
             }
             res.json({ message: 'Reaction successfully deleted!' });
         } catch (err) {
